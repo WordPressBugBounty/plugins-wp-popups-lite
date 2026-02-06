@@ -14,4 +14,13 @@ return array(
     'Jaybizzle\\CrawlerDetect\\Fixtures\\Exclusions' => $vendorDir . '/jaybizzle/crawler-detect/src/Fixtures/Exclusions.php',
     'Jaybizzle\\CrawlerDetect\\Fixtures\\Headers' => $vendorDir . '/jaybizzle/crawler-detect/src/Fixtures/Headers.php',
     'Mobile_Detect' => $vendorDir . '/mobiledetect/mobiledetectlib/Mobile_Detect.php',
+    'ReCaptcha\\ReCaptcha' => $vendorDir . '/google/recaptcha/src/ReCaptcha/ReCaptcha.php',
+    'ReCaptcha\\RequestMethod' => $vendorDir . '/google/recaptcha/src/ReCaptcha/RequestMethod.php',
+    'ReCaptcha\\RequestMethod\\Curl' => $vendorDir . '/google/recaptcha/src/ReCaptcha/RequestMethod/Curl.php',
+    'ReCaptcha\\RequestMethod\\CurlPost' => $vendorDir . '/google/recaptcha/src/ReCaptcha/RequestMethod/CurlPost.php',
+    'ReCaptcha\\RequestMethod\\Post' => $vendorDir . '/google/recaptcha/src/ReCaptcha/RequestMethod/Post.php',
+    'ReCaptcha\\RequestMethod\\Socket' => $vendorDir . '/google/recaptcha/src/ReCaptcha/RequestMethod/Socket.php',
+    'ReCaptcha\\RequestMethod\\SocketPost' => $vendorDir . '/google/recaptcha/src/ReCaptcha/RequestMethod/SocketPost.php',
+    'ReCaptcha\\RequestParameters' => $vendorDir . '/google/recaptcha/src/ReCaptcha/RequestParameters.php',
+    'ReCaptcha\\Response' => $vendorDir . '/google/recaptcha/src/ReCaptcha/Response.php',
 );

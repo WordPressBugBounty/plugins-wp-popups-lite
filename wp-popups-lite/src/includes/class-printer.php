@@ -55,7 +55,7 @@ class WPPopups_Printer {
 		add_filter( 'wppopups_content', 'convert_chars' );
 		add_filter( 'wppopups_content', 'wpautop' );
 		add_filter( 'wppopups_content', 'shortcode_unautop' );
-		add_filter( 'wppopups_content', 'wp_kses_post' );
+		add_filter( 'wppopups_content', 'wppopups_kses_post_with_iframe' );
 		global $wp_version;
 		if ( version_compare( $wp_version, '5.5', '<=' ) && version_compare( $wp_version, '4.4', '>=' ) ) {
 			add_filter( 'wppopups_content', 'wp_make_content_images_responsive' );
@@ -301,7 +301,7 @@ class WPPopups_Printer {
 		//Close
 		if( apply_filters( 'wppopups_display_close_button', true, $popup_data, $popup ) ) {
 			$close_position = isset( $popup_data['close']['close_position'] ) ? $popup_data['close']['close_position'] : '';
-			echo '<a href="#" class="spu-close spu-close-popup spu-close-' . esc_attr( wppopups_sanitize_classes( $close_position ) ) . '">&times;</a>';
+			echo '<span class="spu-close spu-close-popup spu-close-' . esc_attr( wppopups_sanitize_classes( $close_position ) ) . '">&times;</span>';
 		}
 		// Timer
 		echo '<span class="spu-timer"></span>';

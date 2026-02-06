@@ -694,7 +694,17 @@ abstract class WPPopups_Field {
 				$rows   = ! empty( $args['rows'] ) ? (int) $args['rows'] : '3';
 				$output = sprintf( '<textarea class="%s" id="wppopups-field-option-%d-%s" name="fields[%d][%s]" rows="%d" %s>%s</textarea>', $class, $id, $slug, $id, $slug, $rows, $attrs, $args['value'] );
 				break;
-
+			
+			// Password input.
+			case 'password':
+				$placeholder = ! empty( $args['placeholder'] ) ? esc_attr( $args['placeholder'] ) : '';
+				$before      = ! empty( $args['before'] ) ? '<span class="before-input">' . esc_html( $args['before'] ) . '</span>' : '';
+				if ( ! empty( $before ) ) {
+					$class .= ' has-before';
+				}
+				$output = sprintf( '%s<input type="password" class="%s" id="wppopups-field-option-%d-%s" name="fields[%d][%s]" value="%s" placeholder="%s" %s>', $before, $class, $id, $slug, $id, $slug, esc_attr( $args['value'] ), $placeholder, $attrs );
+				break;
+				
 			// Checkbox.
 			case 'checkbox':
 				$checked = checked( '1', $args['value'], false );
@@ -711,7 +721,7 @@ abstract class WPPopups_Field {
 				$checked = checked( '1', $args['value'], false );
 				$icon    = $args['value'] ? 'fa-toggle-on' : 'fa-toggle-off';
 				$cls     = $args['value'] ? 'wppopups-on' : 'wppopups-off';
-				$status  = $args['value'] ? esc_html__( 'On', 'wppopups-lite' ) : esc_html__( 'Off', 'wppopups-lite' );
+				$status  = $args['value'] ? esc_html__( 'On', 'wp-popups-lite' ) : esc_html__( 'Off', 'wp-popups-lite' );
 				$output  = sprintf( '<span class="wppopups-toggle-icon %s"><i class="fa %s" aria-hidden="true"></i> <span class="wppopups-toggle-icon-label">%s</span>', $cls, $icon, $status );
 				$output .= sprintf( '<input type="checkbox" class="%s" id="wppopups-field-option-%d-%s" name="fields[%d][%s]" value="1" %s %s></span>', $class, $id, $slug, $id, $slug, $checked, $attrs );
 				break;
@@ -796,7 +806,7 @@ abstract class WPPopups_Field {
 				$output .= $this->field_element( 'textarea', $field, array( 'slug' => 'description', 'value' => $value ), false );
 				$output  = $this->field_element( 'row',      $field, array( 'slug' => 'description', 'content' => $output ), false );
 				break;
-
+				
 			/*
 			 * Field Required toggle.
 			 */
@@ -1042,7 +1052,7 @@ abstract class WPPopups_Field {
 					array(
 						'slug'    => 'choices_images',
 						'value'   => isset( $field['choices_images'] ) ? '1' : '0',
-						'desc'    => esc_html__( 'Use image choices', 'wppopups-lite' ),
+						'desc'    => esc_html__( 'Use image choices', 'wp-popups-lite' ),
 						'tooltip' => esc_html__( 'Check this option to enable using images with the choices.', 'wp-popups-lite' ),
 					),
 					false
@@ -1144,10 +1154,11 @@ abstract class WPPopups_Field {
 			case 'advanced-options':
 				$markup = ! empty( $args['markup'] ) ? $args['markup'] : 'open';
 				if ( 'open' === $markup ) {
+					$title    = $args['title'] ?: esc_html__( 'Advanced Options', 'wp-popups-lite' );
 					$override = apply_filters( 'wppopups_advanced_options_override', false );
 					$override = ! empty( $override ) ? 'style="display:' . $override . ';"' : '';
 					$output   = sprintf( '<div class="wppopups-field-option-group wppopups-field-option-group-advanced wppopups-hide" id="wppopups-field-option-advanced-%d" %s>', $field['id'], $override );
-					$output  .= sprintf( '<a href="#" class="wppopups-field-option-group-toggle">%s <i class="fa fa-angle-right"></i></a>', esc_html__( 'Advanced Options', 'wp-popups-lite' ) );
+					$output  .= sprintf( '<a href="#" class="wppopups-field-option-group-toggle">%s <i class="fa fa-angle-right"></i></a>', $title );
 					$output  .= '<div class="wppopups-field-option-group-inner">';
 				} else {
 					$output = '</div></div>';

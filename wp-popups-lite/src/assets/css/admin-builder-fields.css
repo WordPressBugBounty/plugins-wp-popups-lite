@@ -230,6 +230,7 @@ Admin Form Builder - Fields panel
 }
 
 .wppopups-field-option-row input[type=text],
+.wppopups-field-option-row input[type=password],
 .wppopups-field-option-row input[type=number],
 .wppopups-field-option-row textarea {
 	width: 99%;

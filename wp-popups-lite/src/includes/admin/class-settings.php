@@ -272,6 +272,32 @@ class WPPopups_Settings {
 					'default'       => '0',
 					'premium_field' => ! ( wppopups()->pro ),
 				],
+				'recaptcha-heading' => [
+					'id'       => 'recaptcha-heading',
+					'content'  => '<h4>' . esc_html__( 'Recaptcha v2', 'wp-popups-lite' ) . '</h4>',
+					'type'     => 'content',
+					'no_label' => true,
+					'class'    => [ 'section-heading', 'no-desc' ],
+				],
+				'recaptcha_v2_site_key' => [
+					'id'      => 'recaptcha_v2_site_key',
+					'name'    => esc_html__( 'Site Key', 'wp-popups-lite' ),
+					'desc'    => sprintf(
+						esc_html__( 'Generate your credentials in %s', 'wp-popups-lite' ),
+						sprintf(
+							'<a href="https://www.google.com/recaptcha/admin/create">%s</a>',
+							esc_html__( 'Recaptcha V2', 'wp-popups-lite' )
+						)
+					),
+					'type'    => 'text',
+					'default' => ''
+				],
+				'recaptcha_v2_secret_key' => [
+					'id'      => 'recaptcha_v2_secret_key',
+					'name'    => esc_html__( 'Secret Key', 'wp-popups-lite' ),
+					'type'    => 'text',
+					'default' => ''
+				],
 			],
 			// Misc. settings tab.
 			'misc'    => [

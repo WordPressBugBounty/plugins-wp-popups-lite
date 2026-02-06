@@ -1947,6 +1947,30 @@
       });
       $builder.on('change', '.wppopups-field-option-row-limit_enabled input', function (event) {
         WPPopupsBuilder.updateTextFieldsLimitControls($(event.target).parents('.wppopups-field-option-row-limit_enabled').data().fieldId, event.target.checked);
+      }); // Real-time recaptha v2 field
+
+      $builder.on('change', '.wppopups-field-option-row-recaptcha_v2_theme select', function (e) {
+        var $this = $(this),
+            themeName = $this.val(),
+            fieldID = $this.parent().data('field-id');
+        var sizeName = $('.wppopups-field-option-row-recaptcha_v2_size select').val();
+        var imgSource = $('.wppopups-field-wrap #wppopups-field-' + fieldID).find('img').attr('src');
+        var imgName = imgSource.substring(imgSource.lastIndexOf('/') + 1);
+        var newImgName = 'g_recaptcha_v2_' + themeName + '_' + sizeName + '.jpg';
+        var newImgSource = imgSource.replace(imgName, newImgName);
+        $('.wppopups-field-wrap #wppopups-field-' + fieldID).find('img').attr('src', newImgSource);
+      }); // Real-time recaptha v2 field
+
+      $builder.on('change', '.wppopups-field-option-row-recaptcha_v2_size select', function (e) {
+        var $this = $(this),
+            sizeName = $this.val(),
+            fieldID = $this.parent().data('field-id');
+        var themeName = $('.wppopups-field-option-row-recaptcha_v2_theme select').val();
+        var imgSource = $('.wppopups-field-wrap #wppopups-field-' + fieldID).find('img').attr('src');
+        var imgName = imgSource.substring(imgSource.lastIndexOf('/') + 1);
+        var newImgName = 'g_recaptcha_v2_' + themeName + '_' + sizeName + '.jpg';
+        var newImgSource = imgSource.replace(imgName, newImgName);
+        $('.wppopups-field-wrap #wppopups-field-' + fieldID).find('img').attr('src', newImgSource);
       });
     },
 

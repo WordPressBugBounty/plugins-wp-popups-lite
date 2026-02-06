@@ -2244,6 +2244,36 @@
                     WPPopupsBuilder.updateTextFieldsLimitControls( $( event.target ).parents( '.wppopups-field-option-row-limit_enabled' ).data().fieldId, event.target.checked );
                 }
             );
+
+			// Real-time recaptha v2 field
+			$builder.on('change', '.wppopups-field-option-row-recaptcha_v2_theme select', function(e) {
+				const $this = $(this),
+					themeName = $this.val(),
+					fieldID   = $this.parent().data('field-id');
+
+				const sizeName = $('.wppopups-field-option-row-recaptcha_v2_size select').val();
+				const imgSource = $('.wppopups-field-wrap #wppopups-field-'+fieldID).find('img').attr( 'src' );
+				const imgName = imgSource.substring( imgSource.lastIndexOf('/') + 1 );
+				const newImgName = 'g_recaptcha_v2_'+themeName+'_'+sizeName+'.jpg';
+				const newImgSource = imgSource.replace( imgName, newImgName );
+
+				$('.wppopups-field-wrap #wppopups-field-'+fieldID).find('img').attr( 'src', newImgSource );
+			});
+
+			// Real-time recaptha v2 field
+			$builder.on('change', '.wppopups-field-option-row-recaptcha_v2_size select', function(e) {
+				const $this = $(this),
+					sizeName = $this.val(),
+					fieldID  = $this.parent().data('field-id');
+
+				const themeName = $('.wppopups-field-option-row-recaptcha_v2_theme select').val();
+				const imgSource = $('.wppopups-field-wrap #wppopups-field-'+fieldID).find('img').attr( 'src' );
+				const imgName = imgSource.substring( imgSource.lastIndexOf('/') + 1 );
+				const newImgName = 'g_recaptcha_v2_'+themeName+'_'+sizeName+'.jpg';
+				const newImgSource = imgSource.replace( imgName, newImgName );
+
+				$('.wppopups-field-wrap #wppopups-field-'+fieldID).find('img').attr( 'src', newImgSource );
+			});
         },
 
 

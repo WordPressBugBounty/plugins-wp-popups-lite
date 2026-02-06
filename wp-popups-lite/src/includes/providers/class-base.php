@@ -88,7 +88,7 @@ abstract class WPPopups_Provider {
 	 */
 	public function __construct() {
 
-		$this->type = esc_html__( 'Connection', 'wppopups-lite' );
+		$this->type = esc_html__( 'Connection', 'wp-popups-lite' );
 
 		$this->init();
 
@@ -161,7 +161,7 @@ abstract class WPPopups_Provider {
 		if ( ! wppopups_current_user_can() ) {
 			wp_send_json_error(
 				[
-					'error' => esc_html__( 'You do not have permission', 'wppopups-lite' ),
+					'error' => esc_html__( 'You do not have permission', 'wp-popups-lite' ),
 				]
 			);
 		}
@@ -476,7 +476,7 @@ abstract class WPPopups_Provider {
 
 		$output .= $this->output_options( $connection_id, $connection );
 
-		$output .= '<button class="wppopups-provider-connections-save">'. esc_html__( 'Save Connection', 'wppopups-lite' ) .'</button>';
+		$output .= '<button class="wppopups-provider-connections-save">'. esc_html__( 'Save Connection', 'wp-popups-lite' ) .'</button>';
 
 		$output .= '</div>';
 
@@ -637,9 +637,9 @@ abstract class WPPopups_Provider {
 
 		$output = '<div class="wppopups-provider-groups wppopups-connection-block">';
 
-		$output .= sprintf( '<h4>%s</h4>', esc_html__( 'Select Groups', 'wppopups-lite' ) );
+		$output .= sprintf( '<h4>%s</h4>', esc_html__( 'Select Groups', 'wp-popups-lite' ) );
 
-		$output .= sprintf( '<p>%s</p>', esc_html__( 'We also noticed that you have some segments in your list. You can select specific list segments below if needed. This is optional.', 'wppopups-lite' ) );
+		$output .= sprintf( '<p>%s</p>', esc_html__( 'We also noticed that you have some segments in your list. You can select specific list segments below if needed. This is optional.', 'wp-popups-lite' ) );
 
 		$output .= '<div class="wppopups-provider-groups-list">';
 
@@ -851,7 +851,7 @@ abstract class WPPopups_Provider {
 					<?php
 					printf(
 					/* translators: %s - Provider type. */
-						esc_html__( 'Add New %s', 'wppopups-lite' ),
+						esc_html__( 'Add New %s', 'wp-popups-lite' ),
 						esc_html( $this->type )
 					);
 					?>
@@ -917,7 +917,7 @@ abstract class WPPopups_Provider {
 		if ( ! wppopups_current_user_can() ) {
 			wp_send_json_error(
 				[
-					'error' => esc_html__( 'You do not have permission', 'wppopups-lite' ),
+					'error' => esc_html__( 'You do not have permission', 'wp-popups-lite' ),
 				]
 			);
 		}
@@ -925,7 +925,7 @@ abstract class WPPopups_Provider {
 		if ( empty( $_POST['provider'] ) || empty( $_POST['key'] ) ) {
 			wp_send_json_error(
 				[
-					'error' => esc_html__( 'Missing data', 'wppopups-lite' ),
+					'error' => esc_html__( 'Missing data', 'wp-popups-lite' ),
 				]
 			);
 		}
@@ -944,7 +944,7 @@ abstract class WPPopups_Provider {
 		} else {
 			wp_send_json_error(
 				[
-					'error' => esc_html__( 'Connection missing', 'wppopups-lite' ),
+					'error' => esc_html__( 'Connection missing', 'wp-popups-lite' ),
 				]
 			);
 		}
@@ -968,7 +968,7 @@ abstract class WPPopups_Provider {
 		if ( ! wppopups_current_user_can() ) {
 			wp_send_json_error(
 				[
-					'error' => esc_html__( 'You do not have permission', 'wppopups-lite' ),
+					'error' => esc_html__( 'You do not have permission', 'wp-popups-lite' ),
 				]
 			);
 		}
@@ -976,7 +976,7 @@ abstract class WPPopups_Provider {
 		if ( empty( $_POST['data'] ) ) {
 			wp_send_json_error(
 				[
-					'error' => esc_html__( 'Missing data', 'wppopups-lite' ),
+					'error' => esc_html__( 'Missing data', 'wp-popups-lite' ),
 				]
 			);
 		}
@@ -989,7 +989,7 @@ abstract class WPPopups_Provider {
 
 			wp_send_json_error(
 				[
-					'error'     => esc_html__( 'Could not connect to the provider.', 'wppopups-lite' ),
+					'error'     => esc_html__( 'Could not connect to the provider.', 'wp-popups-lite' ),
 					'error_msg' => $auth->get_error_message(),
 				]
 			);
@@ -999,8 +999,8 @@ abstract class WPPopups_Provider {
 			$account = '<li class="wppopups-clear">';
 			$account .= '<span class="label">' . sanitize_text_field( $data['label'] ) . '</span>';
 			/* translators: %s - Connection date. */
-			$account .= '<span class="date">' . sprintf( esc_html__( 'Connected on: %s', 'wppopups-lite' ), date_i18n( get_option( 'date_format', time() ) ) ) . '</span>';
-			$account .= '<span class="remove"><a href="#" data-provider="' . $this->slug . '" data-key="' . esc_attr( $auth ) . '">' . esc_html__( 'Disconnect', 'wppopups-lite' ) . '</a></span>';
+			$account .= '<span class="date">' . sprintf( esc_html__( 'Connected on: %s', 'wp-popups-lite' ), date_i18n( get_option( 'date_format', time() ) ) ) . '</span>';
+			$account .= '<span class="remove"><a href="#" data-provider="' . $this->slug . '" data-key="' . esc_attr( $auth ) . '">' . esc_html__( 'Disconnect', 'wp-popups-lite' ) . '</a></span>';
 			$account .= '</li>';
 
 			wp_send_json_success(
@@ -1027,7 +1027,7 @@ abstract class WPPopups_Provider {
 		$class     = $connected && $accounts ? 'connected' : '';
 		$arrow     = 'right';
 		/* translators: %s - provider name. */
-		$title_connect_to = sprintf( esc_html__( 'Connect to %s', 'wppopups-lite' ), esc_html( $this->name ) );
+		$title_connect_to = sprintf( esc_html__( 'Connect to %s', 'wp-popups-lite' ), esc_html( $this->name ) );
 
 		// This lets us highlight a specific service by a special link.
 		if ( ! empty( $_GET['wppopups-integration'] ) ) { //phpcs:ignore
@@ -1047,7 +1047,7 @@ abstract class WPPopups_Provider {
 			     data-provider="<?php echo esc_attr( $this->slug ); ?>">
 
 				<div class="wppopups-settings-provider-logo">
-					<i title="<?php esc_attr_e( 'Show Accounts', 'wppopups-lite' ); ?>"
+					<i title="<?php esc_attr_e( 'Show Accounts', 'wp-popups-lite' ); ?>"
 					   class="fa fa-chevron-<?php echo esc_attr( $arrow ); ?>"></i>
 					<img src="<?php echo esc_url( $this->icon ); ?>">
 				</div>
@@ -1057,11 +1057,11 @@ abstract class WPPopups_Provider {
 					<p>
 						<?php
 						/* translators: %s - provider name. */
-						printf( esc_html__( 'Integrate %s with WPPopups', 'wppopups-lite' ), esc_html( $this->name ) );
+						printf( esc_html__( 'Integrate %s with WPPopups', 'wp-popups-lite' ), esc_html( $this->name ) );
 						?>
 					</p>
 					<span class="connected-indicator green"><i
-								class="fa fa-check-circle-o"></i>&nbsp;<?php esc_html_e( 'Connected', 'wppopups-lite' ); ?></span>
+								class="fa fa-check-circle-o"></i>&nbsp;<?php esc_html_e( 'Connected', 'wp-popups-lite' ); ?></span>
 				</div>
 
 			</div>
@@ -1076,8 +1076,8 @@ abstract class WPPopups_Provider {
 								echo '<li class="wppopups-clear">';
 								echo '<span class="label">' . esc_html( $account['label'] ) . '</span>';
 								/* translators: %s - Connection date. */
-								echo '<span class="date">' . sprintf( esc_html__( 'Connected on: %s', 'wppopups-lite' ), date_i18n( get_option( 'date_format' ), intval( $account['date'] ) ) ) . '</span>';
-								echo '<span class="remove"><a href="#" data-provider="' . esc_attr( $this->slug ) . '" data-key="' . esc_attr( $key ) . '">' . esc_html__( 'Disconnect', 'wppopups-lite' ) . '</a></span>';
+								echo '<span class="date">' . sprintf( esc_html__( 'Connected on: %s', 'wp-popups-lite' ), date_i18n( get_option( 'date_format' ), intval( $account['date'] ) ) ) . '</span>';
+								echo '<span class="remove"><a href="#" data-provider="' . esc_attr( $this->slug ) . '" data-key="' . esc_attr( $key ) . '">' . esc_html__( 'Disconnect', 'wp-popups-lite' ) . '</a></span>';
 								echo '</li>';
 							}
 						}
@@ -1088,14 +1088,14 @@ abstract class WPPopups_Provider {
 				<p class="wppopups-settings-provider-accounts-toggle">
 					<a class="wppopups-btn wppopups-btn-md wppopups-btn-light-grey" href="#"
 					   data-provider="<?php echo esc_attr( $this->slug ); ?>">
-						<i class="fa fa-plus"></i> <?php esc_html_e( 'Add New Account', 'wppopups-lite' ); ?>
+						<i class="fa fa-plus"></i> <?php esc_html_e( 'Add New Account', 'wp-popups-lite' ); ?>
 					</a>
 				</p>
 
 				<div class="wppopups-settings-provider-accounts-connect">
 
 					<form>
-						<p><?php esc_html_e( 'Please fill out all of the fields below to add your new provider account.', 'wppopups-lite' ); ?></span></p>
+						<p><?php esc_html_e( 'Please fill out all of the fields below to add your new provider account.', 'wp-popups-lite' ); ?></span></p>
 
 						<p class="wppopups-settings-provider-accounts-connect-fields">
 							<?php $this->integrations_tab_new_form(); ?>

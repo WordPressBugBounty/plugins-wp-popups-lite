@@ -3,13 +3,22 @@
         'name' => 'timersys/wppopups',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '88426ea0cef1b5bdbd42909c630160a91b776c87',
+        'reference' => 'eb532b6a7a7497f7baca9ad9cb84cca7be5f2b1b',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => false,
     ),
     'versions' => array(
+        'google/recaptcha' => array(
+            'pretty_version' => '1.2.4',
+            'version' => '1.2.4.0',
+            'reference' => '614f25a9038be4f3f2da7cbfd778dc5b357d2419',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../google/recaptcha',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'jaybizzle/crawler-detect' => array(
             'pretty_version' => 'v1.2.121',
             'version' => '1.2.121.0',
@@ -31,7 +40,7 @@
         'timersys/wppopups' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '88426ea0cef1b5bdbd42909c630160a91b776c87',
+            'reference' => 'eb532b6a7a7497f7baca9ad9cb84cca7be5f2b1b',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

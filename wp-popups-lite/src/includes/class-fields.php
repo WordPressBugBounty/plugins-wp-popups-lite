@@ -45,6 +45,7 @@ class WPPopups_Fields {
 				'radio',
 				'checkbox',
 				'gdpr-checkbox',
+				'recaptcha-v2',
 				'divider',
 				'email',
 				//'url',

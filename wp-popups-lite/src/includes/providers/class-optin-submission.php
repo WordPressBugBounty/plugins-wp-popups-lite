@@ -65,6 +65,10 @@ class WPPopups_Optin_Submission {
 		do_action( "wppopups_process_{$form_data['popup']}", $form_data );
 
 		$form_data = apply_filters( 'wppopups_process_after_filter', $form_data );
+		
+		if ( ! empty( self::$errors ) ) {
+			wp_send_json_error( implode('<br>', self::$errors ) );
+		}
 
 		// Post-process hooks.
 		do_action( 'wppopups_process_complete', $form_data );

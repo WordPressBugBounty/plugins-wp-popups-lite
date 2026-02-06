@@ -64,8 +64,6 @@ class WPPopups_Content_Templates {
 		// Register the post type
 		register_post_type( 'wppopups-templates', $args );
 
-		// Refresh
-		flush_rewrite_rules();
 	}
 
 
@@ -82,7 +80,7 @@ class WPPopups_Content_Templates {
 			$newCols[ $keyColumn ] = $valueColumn;
 
 			if( $keyColumn == 'title' ) {
-				$newCols['shortcode'] = esc_html__( 'Shortcode', 'wppopups-lite' );
+				$newCols['shortcode'] = esc_html__( 'Shortcode', 'wp-popups-lite' );
 			}
 		}
 

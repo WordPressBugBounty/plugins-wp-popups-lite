@@ -329,7 +329,7 @@ class WPPopups_Rules {
 		self::$is_search     = is_search();
 		self::$current_url   = wppopups_get_current_url();
 		self::$is_front_page = is_front_page();
-		self::$is_blog_page  = is_home();
+		self::$is_blog_page  = is_home() || is_singular('post');
 		// woocommerce init
 		if ( function_exists( 'is_shop' ) ) {
 			self::$woo_is_account_page     = is_account_page();
@@ -744,7 +744,7 @@ class WPPopups_Rules {
 	 * @return boolean true if match
 	 */
 	public static function rule_match_browser( $rule ) {
-		include_once 'libraries/Browser.php';
+		include_once WPPOPUPS_PLUGIN_DIR . 'includes/libraries/Browser.php';
 
 		$detect = new Browser();
 

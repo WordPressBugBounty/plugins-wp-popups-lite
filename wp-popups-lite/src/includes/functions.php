@@ -65,6 +65,8 @@ function wppopups_has_field_type( $type, $popup, $multiple = false ) {
 		$popup_data = wppopups_decode( $popup->post_content );
 	} elseif ( is_array( $popup ) ) {
 		$popup_data = $popup;
+	} elseif( $popup instanceof WPPopups_Popup ) {
+		$popup_data = $popup->data;
 	}
 
 	if ( empty( $popup_data['fields'] ) ) {
@@ -127,6 +129,35 @@ function wppopups_has_field_setting( $setting, $popup, $multiple = false ) {
 	}
 
 	return $field;
+}
+
+/**
+ * Get Field Settings by type
+ *
+ * @since 1.4.5
+ *
+ * @param string $type
+ * @param WPPopups_Popup  $popup
+ *
+ * @return array
+ */
+function wppopups_get_field_settings( string $type, WPPopups_Popup $popup ): array {
+	
+	$settings = [];
+	
+	if ( empty( $popup->data['fields'] ) ) {
+		return $settings;
+	}
+	
+	foreach ( $popup->data['fields'] as $field ) {
+		
+		if ( $field['type'] === $type ) {
+			$settings = $field;
+			break;
+		}
+	}
+	
+	return $settings;
 }
 
 
@@ -550,7 +581,7 @@ function wppopups_get_taxonomies() {
  * @return array
  */
 function wppopups_get_browsers() {
-
+	include_once WPPOPUPS_PLUGIN_DIR . 'includes/libraries/Browser.php';
 	$browsers = [
 		Browser::BROWSER_OPERA        => Browser::BROWSER_OPERA,
 		Browser::BROWSER_WEBTV        => Browser::BROWSER_WEBTV,
@@ -1182,7 +1213,8 @@ function wppopups_clear_caches() {
 	}
 	// Pagely
 	if ( class_exists( 'PagelyCachePurge' ) && method_exists( 'PagelyCachePurge', 'purgeAll' ) ) {
-		PagelyCachePurge::purgeAll();
+		$purger = new PagelyCachePurge();
+		$purger->purgeAll();
 	}
 	// Autoptimize
 	if ( class_exists( 'autoptimizeCache' ) && method_exists( 'autoptimizeCache', 'clearall' ) ) {
@@ -1551,4 +1583,23 @@ function wppopups_get_ids( $popups ) {
 		}
 	}
 	return $ids;
+}
+
+function wppopups_kses_post_with_iframe($content) {
+    // Get the default allowed tags
+    $allowed_tags = wp_kses_allowed_html('post');
+
+    // Add <iframe> to the allowed tags
+    $allowed_tags['iframe'] = [
+        'src'             => true,
+        'width'           => true,
+        'height'          => true,
+        'frameborder'     => true,
+        'allowfullscreen' => true,
+        'allow'           => true,
+        'sandbox'         => true,
+    ];
+
+    // Use wp_kses with the modified allowed tags
+    return wp_kses($content, $allowed_tags);
 }
