@@ -1600,6 +1600,36 @@ function wppopups_kses_post_with_iframe($content) {
         'sandbox'         => true,
     ];
 
+    // Add <form> to the allowed tags
+    $allowed_tags['form'] = [
+        'action' => true,
+        'method' => true,
+        'id'     => true,
+        'class'  => true,
+        'name'   => true,
+    ];
+
+    // Add <select> to the allowed tags
+    $allowed_tags['select'] = [
+        'id'     => true,
+        'class'  => true,
+        'name'   => true,
+        'multiple' => true,
+    ];
+
+    // Add <input> to the allowed tags
+    $allowed_tags['input'] = [
+        'type'        => true,
+        'id'          => true,
+        'class'       => true,
+        'name'        => true,
+        'value'       => true,
+        'placeholder' => true,
+        'required'    => true,
+        'checked'     => true,
+        'disabled'    => true,
+    ];
+
     // Use wp_kses with the modified allowed tags
     return wp_kses($content, $allowed_tags);
 }

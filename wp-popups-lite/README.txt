@@ -3,8 +3,8 @@ Contributors: timersys
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K4T6L69EV9G2Q
 Tags:  wp popups,popups,wp popup,popup builder,popup maker
 Requires at least: 3.6
-Tested up to: 6.9.1
-Stable tag: 2.2.0.4
+Tested up to: 6.9.2
+Stable tag: 2.2.0.5
 Requires PHP: 5.7
 Text Domain: wp-popups-lite
 License: GPLv2 or later
@@ -122,6 +122,9 @@ Yes you can attach to any of this events . id = Popup id
  jQuery(document).on('wppopups.form_submitted',function(e,id){ ... });`
 
 == Changelog ==
+= 2.2.0.5 =
+* Added more allowed tags to our kses posts function
+
 = 2.2.0.4 =
 * Fixed security issue where a malicius admin could get content for other posts that are not related to wppopups 
 * Fixed issue with keyword url
