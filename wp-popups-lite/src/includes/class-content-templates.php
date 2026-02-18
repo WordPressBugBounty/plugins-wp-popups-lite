@@ -113,8 +113,8 @@ class WPPopups_Content_Templates {
 		}
 
 		$post = get_post( absint( $atts['id'] ) );
-
-		if ( ! $post instanceof WP_Post ) {
+        // check that is a wp popups template	
+		if ( ! $post instanceof WP_Post  && $post->post_type !== 'wppopups-templates' ) {
 			return false;
 		}
 

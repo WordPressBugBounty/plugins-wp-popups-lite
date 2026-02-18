@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  wp popups,popups,wp popup,popup builder,popup maker
 Requires at least: 3.6
 Tested up to: 6.9.2
-Stable tag: 2.2.0.5
+Stable tag: 2.2.0.6
 Requires PHP: 5.7
 Text Domain: wp-popups-lite
 License: GPLv2 or later
@@ -122,6 +122,9 @@ Yes you can attach to any of this events . id = Popup id
  jQuery(document).on('wppopups.form_submitted',function(e,id){ ... });`
 
 == Changelog ==
+= 2.2.0.6 =
+* Packing previous commits again (2.2.0.5|2.2.0.4), they were missing from svn
+
 = 2.2.0.5 =
 * Added more allowed tags to our kses posts function
 

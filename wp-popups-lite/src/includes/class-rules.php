@@ -120,7 +120,6 @@ class WPPopups_Rules {
 				'page_parent',
 				'page_template',
 				'custom_url',
-				'keyword_url',
 				'visited_n_pages',
 				'woo_is_shop',
 				'woo_is_order_received',
