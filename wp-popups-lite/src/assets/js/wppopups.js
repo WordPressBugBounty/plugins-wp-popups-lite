@@ -40,6 +40,7 @@
         action: 'wppopups_rules',
         pid: wppopups_vars.pid,
         referrer: document.referrer,
+        user_agent: navigator.userAgent,
         url: document.documentURI,
         query_string: document.location.search,
         is_category: wppopups_vars.is_category,

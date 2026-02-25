@@ -32,6 +32,7 @@ class WPPopups_Rules {
 	private static $woo_is_shop;
 
 	private static $rules_to_check;
+	private static $user_agent;
 
 	/**
 	 * WPPopups_Rules constructor.
@@ -74,6 +75,7 @@ class WPPopups_Rules {
 		add_filter( 'wppopups_rules_rule_match_query_string', [ self::class, 'rule_match_query_string' ] );
 		add_filter( 'wppopups_rules_rule_match_browser', [ self::class, 'rule_match_browser' ] );
 		add_filter( 'wppopups_rules_rule_match_language', [ self::class, 'rule_match_language' ] );
+		add_filter( 'wppopups_rules_rule_match_user_agent', [ self::class, 'rule_match_user_agent' ] );
 
 		// Buddypress
 		add_filter( 'wppopups_rules_rule_match_bp_is_buddypress', [ self::class, 'rule_match_buddypress' ] );
@@ -190,6 +192,9 @@ class WPPopups_Rules {
 		}
 		if ( ! empty( $_POST['woo_is_account_page'] ) ) {
 			self::$woo_is_account_page = $_POST['woo_is_account_page'];
+		}
+		if ( ! empty( $_POST['user_agent'] ) ) {
+			self::$user_agent = sanitize_text_field( $_POST['user_agent'] );
 		}
 	}
 
@@ -407,6 +412,18 @@ class WPPopups_Rules {
 	public static function operators( $rule = 'page_type' ) {
 
 		switch ( $rule ) {
+			case 'user_agent':
+			case 'custom_url':
+			case 'referrer':
+			case 'keyword_url':
+			case 'query_string':
+				$operators = [
+					'=='           => 'is equal to',
+					'!='           => 'not equal to',
+					'contains'     => __( 'contains', 'wp-popups-lite' ),
+					'not_contains' => __( 'does not contains', 'wp-popups-lite' ),
+				];
+				break;
 			default:
 				$operators = [
 					'==' => 'is equal to',
@@ -436,6 +453,7 @@ class WPPopups_Rules {
 			case 'cookie':
 			case 'post_id':
 			case 'language':
+			case 'user_agent':
 				$type = 'text';
 				break;
 			default:
@@ -485,6 +503,7 @@ class WPPopups_Rules {
 				'desktop'      => __( 'Desktop', 'wp-popups-lite' ),
 				'crawlers'     => __( 'Bots/Crawlers', 'wp-popups-lite' ),
 				'browser'      => __( 'Browser', 'wp-popups-lite' ),
+				'user_agent'   => __( 'User Agent', 'wp-popups-lite' ),
 			],
 		];
 		// WPML or Polylang
@@ -756,6 +775,33 @@ class WPPopups_Rules {
 	}
 
 	/**
+	 * Check for user agent string
+	 *
+	 * @param array $rule rule to compare
+	 *
+	 * @return boolean true if match
+	 */
+	public static function rule_match_user_agent( $rule ) {
+		$ua    = isset( self::$user_agent ) ? self::$user_agent : '';
+		$value = isset( $rule['value'] ) ? $rule['value'] : '';
+		$ua_lo    = strtolower( $ua );
+		$value_lo = strtolower( $value );
+
+		if ( 'contains' === $rule['operator'] ) {
+			return $value !== '' && strpos( $ua_lo, $value_lo ) !== false;
+		}
+		if ( 'not_contains' === $rule['operator'] ) {
+			return $value === '' || strpos( $ua_lo, $value_lo ) === false;
+		}
+
+		if ( $rule['operator'] == '==' ) {
+			return $ua_lo === $value_lo;
+		}
+
+		return $ua_lo !== $value_lo;
+	}
+
+	/**
 	 * [rule_match_mobiles description]
 	 *
 	 * @param array $rule rule to compare
@@ -862,9 +908,18 @@ class WPPopups_Rules {
 	 */
 	public static function rule_match_referrer( $rule ) {
 
-		$ref = self::$referrer;
+		$ref      = self::$referrer;
+		$value    = isset( $rule['value'] ) ? $rule['value'] : '';
+		$contains = $value !== '' && strpos( strtolower( $ref ), strtolower( $value ) ) !== false;
 
-		if ( strpos( $ref, $rule['value'] ) !== false ) {
+		if ( 'contains' === $rule['operator'] ) {
+			return $contains;
+		}
+		if ( 'not_contains' === $rule['operator'] ) {
+			return ! $contains;
+		}
+
+		if ( $contains ) {
 			return $rule['operator'] == "==" ? true : false;
 		}
 
@@ -881,10 +936,22 @@ class WPPopups_Rules {
 	 */
 	public static function rule_match_custom_url( $rule ) {
 
-		$wide_search = strpos( $rule['value'], '*' ) !== false ? true : false;
 		$current_url = trim( self::$current_url, '/' );
+		$value       = isset( $rule['value'] ) ? $rule['value'] : '';
+		$url_lo      = strtolower( $current_url );
+		$value_lo    = strtolower( $value );
+
+		if ( 'contains' === $rule['operator'] ) {
+			return $value !== '' && strpos( $url_lo, $value_lo ) !== false;
+		}
+		if ( 'not_contains' === $rule['operator'] ) {
+			return $value === '' || strpos( $url_lo, $value_lo ) === false;
+		}
+
+		$wide_search = strpos( $value, '*' ) !== false;
 		if ( $wide_search ) {
-			if ( strpos( $current_url, trim( $rule['value'], '*' ) ) === 0 ) {
+			$prefix = strtolower( trim( $value, '*' ) );
+			if ( $prefix !== '' && strpos( $url_lo, $prefix ) === 0 ) {
 				return ( $rule['operator'] == "==" );
 			}
 
@@ -892,10 +959,10 @@ class WPPopups_Rules {
 		}
 
 		if ( $rule['operator'] == "==" ) {
-			return ( $current_url === trim( $rule['value'], '/' ) );
+			return ( $url_lo === strtolower( trim( $value, '/' ) ) );
 		}
 
-		return ! ( $current_url === trim( $rule['value'], '/' ) );
+		return ! ( $url_lo === strtolower( trim( $value, '/' ) ) );
 
 	}
 
@@ -910,8 +977,17 @@ class WPPopups_Rules {
 	public static function rule_match_keyword_url( $rule ) {
 
 		$search_url = str_replace( site_url(), '', self::$current_url );
+		$value      = isset( $rule['value'] ) ? trim( $rule['value'] ) : '';
+		$contains   = $value !== '' && strlen( $search_url ) > 0 && strpos( strtolower( $search_url ), strtolower( $value ) ) !== false;
 
-		if ( strlen( $search_url ) > 0 && strpos( $search_url, trim( $rule['value'] ) ) !== false ) {
+		if ( 'contains' === $rule['operator'] ) {
+			return $contains;
+		}
+		if ( 'not_contains' === $rule['operator'] ) {
+			return ! $contains;
+		}
+
+		if ( $contains ) {
 			return ( $rule['operator'] == "==" );
 		}
 
@@ -946,10 +1022,14 @@ class WPPopups_Rules {
 	 * @return boolean true if match
 	 */
 	public static function rule_match_query_string( $rule ) {
-		$found = false;
+		$value = isset( $rule['value'] ) ? str_replace( '?', '', $rule['value'] ) : '';
+		$found = $value !== '' && ! empty( self::$query_string ) && strpos( strtolower( self::$query_string ), strtolower( $value ) ) !== false;
 
-		if( ! empty( self::$query_string ) ) {
-			$found = strpos( self::$query_string, str_replace( '?', '', $rule['value'] ) ) > - 1 ? true : false;
+		if ( 'contains' === $rule['operator'] ) {
+			return $found;
+		}
+		if ( 'not_contains' === $rule['operator'] ) {
+			return ! $found;
 		}
 
 		if ( $rule['operator'] == "==" ) {

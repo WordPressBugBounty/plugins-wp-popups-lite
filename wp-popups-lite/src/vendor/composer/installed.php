@@ -3,7 +3,7 @@
         'name' => 'timersys/wppopups',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'eb532b6a7a7497f7baca9ad9cb84cca7be5f2b1b',
+        'reference' => '983122361618b26477cb48045aa02974049d6007',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,7 +40,7 @@
         'timersys/wppopups' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'eb532b6a7a7497f7baca9ad9cb84cca7be5f2b1b',
+            'reference' => '983122361618b26477cb48045aa02974049d6007',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
