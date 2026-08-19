@@ -3,8 +3,8 @@ Contributors: timersys
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K4T6L69EV9G2Q
 Tags:  wp popups,popups,wp popup,popup builder,popup maker
 Requires at least: 3.6
-Tested up to: 6.9.2
-Stable tag: 2.2.0.7
+Tested up to: 7.2
+Stable tag: 2.2.0.8
 Requires PHP: 5.7
 Text Domain: wp-popups-lite
 License: GPLv2 or later
@@ -122,6 +122,9 @@ Yes you can attach to any of this events . id = Popup id
  jQuery(document).on('wppopups.form_submitted',function(e,id){ ... });`
 
 == Changelog ==
+= 2.2.0.8 =
+* Fixed security issue where an author could read other posts without autorization (ty https://averonsec.com/)
+
 = 2.2.0.7 =
 * Added user agent rules and contains operators
 
